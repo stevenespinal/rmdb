@@ -1,8 +1,15 @@
 import React from "react";
+import {StyledMovieThumb} from "../styles/StyledMovieThumb";
 
-const MovieThumb = () => {
+const MovieThumb = ({image, movieId, clickable, movieName}) => {
   return (
-    <div>Movie Thumb</div>
+    <StyledMovieThumb>
+      {clickable ? (
+        <img src={image} className="clickable" alt="movieThumb"/>
+      ) : (
+        <img src={image} alt="movieThumb"/>
+      )}
+    </StyledMovieThumb>
   )
 }
 
