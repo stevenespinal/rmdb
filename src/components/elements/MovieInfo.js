@@ -3,6 +3,7 @@ import NoImage from "../images/no_image.jpg";
 import {StyledMovieInfo} from "../styles/StyledMovieInfo";
 import {IMAGE_BASE_URL, POSTER_SIZE} from "../../config";
 import MovieThumb from "./MovieThumb";
+import PropTypes from "prop-types";
 
 const MovieInfo = ({movie}) => {
   return (
@@ -30,6 +31,10 @@ const MovieInfo = ({movie}) => {
       </div>
     </StyledMovieInfo>
   )
+}
+
+MovieInfo.propTypes = {
+  movie: PropTypes.object
 }
 
 export default MovieInfo;
