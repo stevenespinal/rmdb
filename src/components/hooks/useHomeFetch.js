@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {POPULAR_BASE_URL} from "../../config";
 
-export const useHomeFetch = () => {
+export const useHomeFetch = searchTerm => {
   const [state, setState] = useState({movies: []});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -13,7 +13,7 @@ export const useHomeFetch = () => {
 
     try {
       const result = await (await fetch(endpoint)).json();
-      console.log(result);
+      // console.log(result);
       setState(prevState => ({
         ...prevState,
         movies: isLoadMore !== -1 ? [...prevState.movies, ...result.results] : [...result.results],
@@ -32,11 +32,20 @@ export const useHomeFetch = () => {
 
   useEffect(() => {
     (async function () {
+        if (sessionStorage.homeState) {
+          setState(JSON.parse(sessionStorage.homeState));
+          setLoading(false);
+        }
         await fetchMovies(`${POPULAR_BASE_URL}`);
       }
     )();
   }, []);
 
+  useEffect(() => {
+    if (!searchTerm) {
+      sessionStorage.setItem('homeState', JSON.stringify(state));
+    }
+  }, [searchTerm, state]);
 
   return [{state, loading, error}, fetchMovies];
 }

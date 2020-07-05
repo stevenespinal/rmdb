@@ -10,8 +10,8 @@ import {BACKDROP_SIZE, IMAGE_BASE_URL, POSTER_SIZE, SEARCH_BASE_URL, POPULAR_BAS
 import NoImage from "./images/no_image.jpg";
 
 const Home = () => {
-  const [{error, loading, state: {heroImage, movies, currentPage, totalPages}}, fetchMovies] = useHomeFetch();
   const [searchTerm, setSearchTerm] = useState('');
+  const [{error, loading, state: {heroImage, movies, currentPage, totalPages}}, fetchMovies] = useHomeFetch(searchTerm);
 
   const searchMovies = async search => {
     const endpoint = search ? SEARCH_BASE_URL + search : POPULAR_BASE_URL;

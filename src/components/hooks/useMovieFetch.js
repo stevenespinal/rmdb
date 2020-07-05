@@ -12,7 +12,7 @@ export const useMovieFetch = movieId => {
     try {
       const endpoint = `${API_URL}movie/${movieId}?api_key=${API_KEY}`;
       const result = await (await fetch(endpoint)).json();
-      console.log(result);
+      // console.log(result);
       const creditsEndpoint = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`;
       const creditsResult = await (await fetch(creditsEndpoint)).json();
       // console.log(creditsResult);
@@ -33,8 +33,18 @@ export const useMovieFetch = movieId => {
   }, [movieId]);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (localStorage[movieId]) {
+      setState(JSON.parse(localStorage[movieId]));
+      setLoading(false);
+    } else {
+      fetchData();
+    }
+  }, [fetchData, movieId]);
+
+  useEffect(() => {
+    localStorage.setItem(movieId, JSON.stringify(state));
+  }, [movieId, state]);
+
 
   return [state, loading, error];
 }
